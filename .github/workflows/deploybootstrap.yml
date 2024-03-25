@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         sparse-checkout: |
-          deploy/budgetbits.zip 
+          deploy/vision-craft.zip 
         sparse-checkout-cone-mode: false
 
     - name: Azure Login
@@ -26,5 +26,5 @@ jobs:
         inlineScript: |
           az webapp deploy \
           --resource-group bargain-bin \
-          --name budgetbits \
-          --src-path deploy/budgetbits.zip  
+          --name visioncraft \
+          --src-path deploy/vision-craft.zip  
