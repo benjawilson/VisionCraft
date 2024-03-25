@@ -26,5 +26,5 @@ jobs:
         inlineScript: |
           az webapp deploy \
           --resource-group bargain-bin \
-          --name visioncraft \
+          --name visioncraftconsulting \
           --src-path deploy/vision-craft.zip  
