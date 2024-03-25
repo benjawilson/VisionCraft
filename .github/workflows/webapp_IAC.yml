@@ -1,0 +1,39 @@
+on: [push]
+
+name: DeployWebAppIAC 
+
+jobs:
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env: 
+      working-directory: terraform/AppService
+
+    steps:
+
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: |
+          terraform/AppService 
+        sparse-checkout-cone-mode: false
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: hashicorp/setup-terraform@v3
+
+    - run: terraform init
+      working-directory: ${{env.working-directory}}
+
+    - id: plan
+      run: terraform plan -no-color
+      working-directory: ${{env.working-directory}}
+
+    - run: echo ${{ steps.plan.outputs.stdout }}
+      working-directory: ${{env.working-directory}}
+    - run: echo ${{ steps.plan.outputs.stderr }}
+      working-directory: ${{env.working-directory}}
+    - run: echo ${{ steps.plan.outputs.exitcode }}
+      working-directory: ${{env.working-directory}}
